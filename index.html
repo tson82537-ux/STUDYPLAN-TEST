@@ -1768,7 +1768,5 @@ const STUDYPLAN_SUPABASE_ANON_KEY='sb_publishable_udUMFM2f5qHCq1pwiPzPtw_r2liabQ
  async function loadPendingTeachers(){const {data,error}=await window.spClient.from('profiles').select('id,full_name,created_at').eq('role','teacher').eq('approval_status','pending');$('pendingTeachers').innerHTML=error?error.message:(data||[]).map(t=>`<div class="submission"><b>${t.full_name||'Giáo viên'}</b> <button type="button" data-approve-teacher="${t.id}">Duyệt tài khoản</button></div>`).join('')||'Không có tài khoản chờ duyệt.';$('pendingTeachers').querySelectorAll('[data-approve-teacher]').forEach(b=>b.onclick=async()=>{const {error}=await window.spClient.from('profiles').update({approval_status:'approved'}).eq('id',b.dataset.approveTeacher);if(error)alert(error.message);else await loadPendingTeachers();});}
 })();
 </script>
-
-  
 </body>
 </html>
